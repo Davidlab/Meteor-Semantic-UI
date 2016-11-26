@@ -1,13 +1,14 @@
 import React from 'react';
 // import { Grid } from 'react-bootstrap';
 import AppNavigation from '../containers/AppNavigation.js';
+import { Container } from 'semantic-ui-react';
 
 const App = ({ children }) => (
   <div>
-    <AppNavigation />
-    <Grid>
+    {/*<AppNavigation />*/}
+    <Container>
       { children }
-    </Grid>
+    </Container>
   </div>
 );
 
