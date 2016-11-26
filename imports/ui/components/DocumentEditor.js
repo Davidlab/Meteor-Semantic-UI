@@ -1,7 +1,7 @@
 /* eslint-disable max-len, no-return-assign */
 
 import React from 'react';
-import { FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
+// import { FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 import documentEditor from '../../modules/document-editor.js';
 
 export default class DocumentEditor extends React.Component {

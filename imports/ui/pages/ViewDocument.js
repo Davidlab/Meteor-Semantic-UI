@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonToolbar, ButtonGroup, Button } from 'react-bootstrap';
+// import { ButtonToolbar, ButtonGroup, Button } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { Bert } from 'meteor/themeteorchef:bert';
 import { removeDocument } from '../../api/documents/methods.js';

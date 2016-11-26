@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListGroup, ListGroupItem, Alert } from 'react-bootstrap';
+// import { ListGroup, ListGroupItem, Alert } from 'react-bootstrap';
 
 const DocumentsList = ({ documents }) => (
   documents.length > 0 ? <ListGroup className="DocumentsList">

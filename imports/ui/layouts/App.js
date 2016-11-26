@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from 'react-bootstrap';
+// import { Grid } from 'react-bootstrap';
 import AppNavigation from '../containers/AppNavigation.js';
 
 const App = ({ children }) => (
