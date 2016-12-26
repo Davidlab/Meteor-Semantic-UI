@@ -1,0 +1,24 @@
+/*******************************
+         Site Overrides
+*******************************/
+//Make react component entry act like body so that Semantic-UI Sidebar/pusher work
+#react-root {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+}
+
+.ui.menu:not(.vertical) .item.sidebar-trigger {
+  display: none;
+}
+
+@media only screen and (max-width: 700px) {
+  .ui.menu:not(.vertical) .item.hidden-item,
+  .secondary.pointing.menu .menu {
+    display: none;
+  }
+
+  .ui.menu:not(.vertical) .item.sidebar-trigger {
+    display: block;
+  }
+}
