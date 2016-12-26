@@ -9,6 +9,7 @@ const composer = ({ params }, onData) => {
 
   if (subscription.ready()) {
     const doc = Documents.findOne();
+
     onData(null, { doc });
   }
 };

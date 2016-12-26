@@ -1,12 +1,11 @@
 import React from 'react';
-// import { Alert } from 'react-bootstrap';
-
+import {Message, Container} from 'semantic-ui-react';
 const NotFound = () => (
-  <div className="NotFound">
-    <Alert bsStyle="danger">
-      <p><strong>Error [404]</strong>: { window.location.pathname } does not exist.</p>
-    </Alert>
-  </div>
-);
+    <Container>
+     <Message warning>
+         <Message.Header><strong>Error [404]</strong>: Sorry, page { window.location.pathname } does not exist.</Message.Header>
+     </Message>
+    </Container>
+ );
 
 export default NotFound;

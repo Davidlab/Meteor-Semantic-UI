@@ -1,58 +1,59 @@
 import React from 'react';
-// import { Row, Col, Alert, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 import handleResetPassword from '../../modules/reset-password';
+import {Container, Form, Button, Header, Message} from 'semantic-ui-react';
+
 
 export default class ResetPassword extends React.Component {
-  componentDidMount() {
-    handleResetPassword({ component: this, token: this.props.params.token });
-  }
+    componentDidMount() {
+        handleResetPassword({component: this, token: this.props.params.token});
+    }
 
-  handleSubmit(event) {
-    event.preventDefault();
-  }
+    handleSubmit(event) {
+        event.preventDefault();
+    }
 
-  render() {
-    return (
-      <div className="ResetPassword">
-        <Row>
-          <Col xs={ 12 } sm={ 6 } md={ 4 }>
-            <h4 className="page-header">Reset Password</h4>
-            <Alert bsStyle="info">
-              To reset your password, enter a new one below. You will be logged in
-    with your new password.
-            </Alert>
-            <form
-              ref={ form => (this.resetPasswordForm = form) }
-              className="reset-password"
-              onSubmit={ this.handleSubmit }
-            >
-              <FormGroup>
-                <ControlLabel>New Password</ControlLabel>
-                <FormControl
-                  type="password"
-                  ref="newPassword"
-                  name="newPassword"
-                  placeholder="New Password"
-                />
-              </FormGroup>
-              <FormGroup>
-                <ControlLabel>Repeat New Password</ControlLabel>
-                <FormControl
-                  type="password"
-                  ref="repeatNewPassword"
-                  name="repeatNewPassword"
-                  placeholder="Repeat New Password"
-                />
-              </FormGroup>
-              <Button type="submit" bsStyle="success">Reset Password &amp; Login</Button>
-            </form>
-          </Col>
-        </Row>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <Container text={true} className="ResetPassword">
+                <Header content="Reset Password" as="h3"/>
+                <Message warning>
+                    To reset your password, enter a new one below. You will be logged in
+                    with your new password.
+                </Message>
+                <Form
+                    ref="resetPasswordForm"
+                    className="reset-password"
+                    onSubmit={ this.handleSubmit }
+                >
+                    <Form.Field>
+                        <label>New Password</label>
+                        <input
+                            type="password"
+                            ref="newPassword"
+                            name="newPassword"
+                            placeholder="New Password"
+                        />
+                    </Form.Field>
+
+                    <Form.Field>
+                        <label>Repeat New Password</label>
+                        <input
+                            type="password"
+                            ref="repeatNewPassword"
+                            name="repeatNewPassword"
+                            placeholder="Repeat New Password"
+                        />
+                    </Form.Field>
+
+                    <Button type="submit">Reset Password &amp; Login</Button>
+                    <div className="ui error message"></div>
+                    <div id="successText"></div>
+                </Form>
+            </Container>
+        );
+    }
 }
 
 ResetPassword.propTypes = {
-  params: React.PropTypes.object,
+    params: React.PropTypes.object,
 };

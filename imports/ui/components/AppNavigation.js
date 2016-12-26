@@ -1,27 +1,35 @@
 import React from 'react';
-// import { Navbar } from 'react-bootstrap';
-import { Link } from 'react-router';
+import {Link} from 'react-router';
 import PublicNavigation from './PublicNavigation.js';
 import AuthenticatedNavigation from './AuthenticatedNavigation.js';
+import {Menu} from 'semantic-ui-react'
 
-const renderNavigation = hasUser => (hasUser ? <AuthenticatedNavigation /> : <PublicNavigation />);
 
-const AppNavigation = ({ hasUser }) => (
-  <Navbar>
-    <Navbar.Header>
-      <Navbar.Brand>
-        <Link to="/">Application Name</Link>
-      </Navbar.Brand>
-      <Navbar.Toggle />
-    </Navbar.Header>
-    <Navbar.Collapse>
-      { renderNavigation(hasUser) }
-    </Navbar.Collapse>
-  </Navbar>
-);
 
+
+export default class AppNavigation extends React.Component {
+  state = {};
+
+  handleItemClick = (e, {name}) => this.setState({activeItem: name});
+
+  render() {
+    const {activeItem} = this.state;
+
+    let renderNavigation = hasUser => (
+      hasUser ? <AuthenticatedNavigation activeItem={activeItem} onClick={ this.handleItemClick.bind(this)}/> : <PublicNavigation activeItem={activeItem} onClick={ this.handleItemClick.bind(this)}/>);
+
+    return (
+      <Menu stackable={false}>
+        <Menu.Item onClick={this.props.toggleVisibility} className="sidebar-trigger" icon="sidebar" as="a" size="small"/>
+        <Menu.Item name="application name" header as={Link} to="/"/>
+
+        {renderNavigation(this.props.hasUser)}
+
+      </Menu>
+    )
+  }
+}
 AppNavigation.propTypes = {
   hasUser: React.PropTypes.object,
+  toggleVisibility: React.PropTypes.func
 };
-
-export default AppNavigation;

@@ -1,11 +1,14 @@
 import React from 'react';
 import DocumentEditor from '../components/DocumentEditor.js';
+import {Container, Header} from 'semantic-ui-react';
 
 const EditDocument = ({ doc }) => (
+  <Container>
   <div className="EditDocument">
-    <h4 className="page-header">Editing "{ doc.title }"</h4>
+    <Header content={`Editing ${doc.title}`} as='h3'/>
     <DocumentEditor doc={ doc } />
   </div>
+  </Container>
 );
 
 EditDocument.propTypes = {

@@ -1,75 +1,90 @@
 /* eslint-disable no-undef */
 
-import { browserHistory } from 'react-router';
-import { Accounts } from 'meteor/accounts-base';
-import { Bert } from 'meteor/themeteorchef:bert';
-import './validation.js';
+import ReactDOM from 'react-dom';
+import {browserHistory} from 'react-router';
+import {Accounts} from 'meteor/accounts-base';
+import {Bert} from 'meteor/themeteorchef:bert';
 
 let component;
 
-const getUserData = () => ({
-  email: document.querySelector('[name="emailAddress"]').value,
-  password: document.querySelector('[name="password"]').value,
-  profile: {
-    name: {
-      first: document.querySelector('[name="firstName"]').value,
-      last: document.querySelector('[name="lastName"]').value,
+const getUserData = (fields) => ({
+    email: fields.emailAddress,
+    password: fields.password,
+    profile: {
+        name: {
+            first: fields.firstName,
+            last: fields.lastName,
+        },
     },
-  },
 });
 
-const signup = () => {
-  const user = getUserData();
+const signup = (fields) => {
+    const user = getUserData(fields);
 
-  Accounts.createUser(user, (error) => {
-    if (error) {
-      Bert.alert(error.reason, 'danger');
-    } else {
-      browserHistory.push('/');
-      Bert.alert('Welcome!', 'success');
-    }
-  });
+    Accounts.createUser(user, (error) => {
+        if (error) {
+            Bert.alert(error.reason, 'danger');
+        } else {
+            browserHistory.push('/');
+            Bert.alert('Welcome!', 'success');
+        }
+    });
 };
 
 const validate = () => {
-  $(component.signupForm).validate({
-    rules: {
-      firstName: {
-        required: true,
-      },
-      lastName: {
-        required: true,
-      },
-      emailAddress: {
-        required: true,
-        email: true,
-      },
-      password: {
-        required: true,
-        minlength: 6,
-      },
-    },
-    messages: {
-      firstName: {
-        required: 'First name?',
-      },
-      lastName: {
-        required: 'Last name?',
-      },
-      emailAddress: {
-        required: 'Need an email address here.',
-        email: 'Is this email address legit?',
-      },
-      password: {
-        required: 'Need a password here.',
-        minlength: 'Use at least six characters, please.',
-      },
-    },
-    submitHandler() { signup(); },
-  });
+    //Semantic UI form validation
+    $(component.signUpForm).form({
+            fields: {
+                firstName: {
+                    identifier: 'firstName',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter your first name'
+                        }
+                    ]
+                }, lastName: {
+                    identifier: 'lastName',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter your last name'
+                        }
+                    ]
+                }, emailAddress: {
+                    identifier: 'emailAddress',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter your last name'
+                        }
+                    ]
+                },
+                password: {
+                    identifier: 'password',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter a password'
+                        },
+                        {
+                            type: 'minLength[6]',
+                            prompt: 'Your password must be at least {ruleValue} characters'
+                        }
+                    ]
+
+                }
+            },
+            onSuccess: (events, fields) => {
+                signup(fields);
+            }
+        },
+    )
+    ;
 };
 
 export default function handleSignup(options) {
-  component = options.component;
-  validate();
+    component = options.component;
+    component.signUpForm = ReactDOM.findDOMNode(component.refs.signUpForm); //get ref to form for validation
+    validate();
 }

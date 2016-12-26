@@ -1,54 +1,73 @@
 /* eslint-disable no-undef */
 
-import { browserHistory } from 'react-router';
-import { Accounts } from 'meteor/accounts-base';
-import { Bert } from 'meteor/themeteorchef:bert';
-import './validation.js';
+import {browserHistory} from 'react-router';
+import ReactDOM from 'react-dom';
+import {Accounts} from 'meteor/accounts-base';
+import {Bert} from 'meteor/themeteorchef:bert';
 
 let component;
 let token;
 
-const handleReset = () => {
-  const password = document.querySelector('[name="newPassword"]').value;
-  Accounts.resetPassword(token, password, (error) => {
-    if (error) {
-      Bert.alert(error.reason, 'danger');
-    } else {
-      browserHistory.push('/');
-      Bert.alert('Password reset!', 'success');
-    }
-  });
+const handleReset = (fields) => {
+    const password = fields.newPassword;
+    Accounts.resetPassword(token, password, (error) => {
+        if (error) {
+            Bert.alert(error.reason, 'danger');
+        } else {
+            browserHistory.push('/');
+            Bert.alert('Password reset!', 'success');
+        }
+    });
 };
 
 const validate = () => {
-  $(component.resetPassword).validate({
-    rules: {
-      newPassword: {
-        required: true,
-        minlength: 6,
-      },
-      repeatNewPassword: {
-        required: true,
-        minlength: 6,
-        equalTo: '[name="newPassword"]',
-      },
-    },
-    messages: {
-      newPassword: {
-        required: 'Enter a new password, please.',
-        minlength: 'Use at least six characters, please.',
-      },
-      repeatNewPassword: {
-        required: 'Repeat your new password, please.',
-        equalTo: 'Hmm, your passwords don\'t match. Try again?',
-      },
-    },
-    submitHandler() { handleReset(); },
-  });
+    //Semantic UI from validation
+    $(component.resetPasswordForm)
+        .form({
+                fields: {
+                    newPassword: {
+                        identifier: 'newPassword',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter your new password'
+                            },
+                            {
+                                type: 'minLength[6]',
+                                prompt: 'Your password must be at least {ruleValue} characters'
+                            }
+                        ]
+
+                    },
+                    repeatNewPassword: {
+                        identifier: 'repeatNewPassword',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Repeat your new password, please.',
+                            },
+                            {
+                                type: 'minLength[6]',
+                                prompt: 'Your password must be at least {ruleValue} characters'
+                            },
+                            {
+                                type: 'match[newPassword]',
+                                prompt: 'Hmm, your passwords don\'t match. Try again?'
+                            }
+                        ]
+
+                    }
+                },
+                onSuccess: function (event, fields) {
+                    handleReset(fields);
+                }
+            },
+        );
 };
 
 export default function handleResetPassword(options) {
-  component = options.component;
-  token = options.token;
-  validate();
+    component = options.component;
+    token = options.token;
+    component.resetPasswordForm = ReactDOM.findDOMNode(component.refs.resetPasswordForm); //get ref to form for validation
+    validate();
 }

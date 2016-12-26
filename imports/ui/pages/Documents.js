@@ -1,23 +1,20 @@
 import React from 'react';
-// import { Row, Col, Button } from 'react-bootstrap';
+import {browserHistory} from 'react-router';
+import {Container, Header, Button, Segment} from 'semantic-ui-react';
 import DocumentsList from '../containers/DocumentsList.js';
 
 const Documents = () => (
-  <div className="Documents">
-    <Row>
-      <Col xs={ 12 }>
-        <div className="page-header clearfix">
-          <h4 className="pull-left">Documents</h4>
-          <Button
-            bsStyle="success"
-            className="pull-right"
-            href="/documents/new"
-          >New Document</Button>
-        </div>
+
+    <Container text={true} className="Documents">
+        <Segment padded clearing vertical>
+            <Header content="Documents" as='h3' floated='left'/>
+            <Header as='h3' floated='right'>
+                <Button color='green' onClick={() => {
+                    browserHistory.push('/documents/new')}}>New Document</Button>
+            </Header>
+        </Segment>
         <DocumentsList />
-      </Col>
-    </Row>
-  </div>
+    </Container>
 );
 
 export default Documents;

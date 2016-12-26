@@ -1,43 +1,43 @@
 import React from 'react';
-// import { Row, Col, Alert, FormGroup, FormControl, Button } from 'react-bootstrap';
 import handleRecoverPassword from '../../modules/recover-password';
+import {Container, Form, Button, Header, Message} from 'semantic-ui-react';
 
 export default class RecoverPassword extends React.Component {
-  componentDidMount() {
-    handleRecoverPassword({ component: this });
-  }
+    componentDidMount() {
+        handleRecoverPassword({ component: this });
+    }
 
-  handleSubmit(event) {
-    event.preventDefault();
-  }
+    handleSubmit(event) {
+        event.preventDefault();
+    }
 
-  render() {
-    return (
-      <div className="RecoverPassword">
-        <Row>
-          <Col xs={ 12 } sm={ 6 } md={ 4 }>
-            <h4 className="page-header">Recover Password</h4>
-            <Alert bsStyle="info">
-              Enter your email address below to receive a link to reset your password.
-            </Alert>
-            <form
-              ref={ form => (this.recoverPasswordForm = form) }
-              className="recover-password"
-              onSubmit={ this.handleSubmit }
-            >
-              <FormGroup>
-                <FormControl
-                  type="email"
-                  ref="emailAddress"
-                  name="emailAddress"
-                  placeholder="Email Address"
-                />
-              </FormGroup>
-              <Button type="submit" bsStyle="success">Recover Password</Button>
-            </form>
-          </Col>
-        </Row>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <Container text={true} className="RecoverPassword">
+                {/*//Semantic UI Form*/}
+                <Header content='Recover Password' as='h3' dividing/>
+                <Message warning>
+                    Enter your email address below to receive a link to reset your password.
+                </Message>
+                <Form
+                    ref="recoverPassword"
+                    className="recover-password"
+                    onSubmit={ this.handleSubmit }>
+
+                    <Form.Field>
+                        <label className="control-label">Email Address</label>
+                        <input type="email"
+                               ref="emailAddress"
+                               name="emailAddress"
+                               className="form-control"
+                               placeholder='Email Address'/>
+                    </Form.Field>
+
+                    <Button type='submit'>Recover Password</Button>
+                    <div className="ui error message"></div>
+                    <div id="successText"></div>
+                </Form>
+            </Container>
+        );
+    }
 }

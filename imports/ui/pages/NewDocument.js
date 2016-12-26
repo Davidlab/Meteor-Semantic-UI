@@ -1,11 +1,12 @@
 import React from 'react';
+import {Header, Container} from 'semantic-ui-react';
 import DocumentEditor from '../components/DocumentEditor.js';
 
 const NewDocument = () => (
-  <div className="NewDocument">
-    <h4 className="page-header">New Document</h4>
-    <DocumentEditor />
-  </div>
+  <Container>
+  <Header content="New Document" as="h3" className="NewDocument"/>
+  <DocumentEditor />
+  </Container>
 );
 
 export default NewDocument;
